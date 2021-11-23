@@ -1,2 +1,2 @@
-# terraform-aws-load-balancer
-load balancer IaC
+# terraform-aws-alb
+alb IaC
