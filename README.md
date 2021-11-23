@@ -1,2 +1,2 @@
-# terraform-aws-alb
-alb IaC
+# terraform-aws-lb
+lb IaC
