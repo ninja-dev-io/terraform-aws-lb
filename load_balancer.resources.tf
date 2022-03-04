@@ -19,7 +19,7 @@ resource "aws_lb_listener" "lb_listener" {
     for_each = each.value.default_action
     content {
       type             = default_action.value.type
-      target_group_arn = lookup(aws_alb_target_group.target_groups, default_action.value.target_group).arn
+      target_group_arn = default_action.value.target_group != null ? lookup(aws_alb_target_group.target_groups, default_action.value.target_group).arn : null
       dynamic "redirect" {
         for_each = default_action.value.redirect
         content {
@@ -42,7 +42,7 @@ resource "aws_lb_listener" "lb_listener" {
 
 resource "aws_alb_target_group" "target_groups" {
   for_each    = { for group in var.target_groups : group.name => group }
-  name        = "${each.key}-tg-${var.env}"
+  name        = "${each.key}-${var.env}"
   port        = each.value.port
   protocol    = each.value.protocol
   vpc_id      = var.vpc_id

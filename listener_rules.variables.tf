@@ -6,12 +6,19 @@ variable "redirect_rules" {
       protocol    = string
       status_code = string
     })
-    condition = object({
+    condition = list(object({
+      host_header = list(object({
+        values = list(string)
+      }))
       http_header = list(object({
         http_header_name = string
         values           = list(string)
       }))
-    })
+      query_string = list(object({
+        key   = string
+        value = string
+      }))
+    }))
   }))
 }
 
@@ -27,11 +34,19 @@ variable "forward_rules" {
       enabled  = bool
       duration = number
     })
-    condition = object({
-      host_header = object({
+    condition = list(object({
+      host_header = list(object({
         values = list(string)
-      })
-    })
+      }))
+      http_header = list(object({
+        http_header_name = string
+        values           = list(string)
+      }))
+      query_string = list(object({
+        key   = string
+        value = string
+      }))
+    }))
   }))
 }
 
@@ -43,12 +58,19 @@ variable "fixed_response_rules" {
       message_body = string
       status_code  = string
     })
-    condition = object({
+    condition = list(object({
+      host_header = list(object({
+        values = list(string)
+      }))
+      http_header = list(object({
+        http_header_name = string
+        values           = list(string)
+      }))
       query_string = list(object({
         key   = string
         value = string
       }))
-    })
+    }))
   }))
 }
 
