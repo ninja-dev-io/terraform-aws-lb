@@ -1,3 +1,3 @@
 output "target_groups" {
-  value = zipmap(var.target_groups[*].name, values(aws_alb_target_group.target_groups)[*].arn)
+  value = zipmap(keys(aws_alb_target_group.target_groups), values(aws_alb_target_group.target_groups)[*].arn)
 }

@@ -7,6 +7,9 @@ variable "redirect_rules" {
       status_code = string
     })
     condition = list(object({
+      path_pattern = list(object({
+        values = list(string)
+      }))
       host_header = list(object({
         values = list(string)
       }))
@@ -24,6 +27,30 @@ variable "redirect_rules" {
 
 variable "forward_rules" {
   type = list(object({
+    listener     = string
+    priority     = number
+    target_group = string
+    condition = list(object({
+      path_pattern = list(object({
+        values = list(string)
+      }))
+      host_header = list(object({
+        values = list(string)
+      }))
+      http_header = list(object({
+        http_header_name = string
+        values           = list(string)
+      }))
+      query_string = list(object({
+        key   = string
+        value = string
+      }))
+    }))
+  }))
+}
+
+variable "forward_weighted_rules" {
+  type = list(object({
     listener = string
     priority = number
     target_groups = list(object({
@@ -35,6 +62,9 @@ variable "forward_rules" {
       duration = number
     })
     condition = list(object({
+      path_pattern = list(object({
+        values = list(string)
+      }))
       host_header = list(object({
         values = list(string)
       }))
@@ -59,6 +89,9 @@ variable "fixed_response_rules" {
       status_code  = string
     })
     condition = list(object({
+      path_pattern = list(object({
+        values = list(string)
+      }))
       host_header = list(object({
         values = list(string)
       }))
